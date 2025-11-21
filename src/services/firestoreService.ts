@@ -6,9 +6,6 @@ import {
   where,
   orderBy,
   addDoc,
-  doc,
-  getDoc,
-  setDoc,
 } from 'firebase/firestore'
 import { db } from '@/firebase/config'
 import { Call } from '@/types'

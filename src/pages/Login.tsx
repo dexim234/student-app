@@ -1,9 +1,9 @@
-// Login/Register page with crypto-style design
+// Login/Register page with premium crypto-style design
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuthStore } from '@/store/authStore'
 import { useThemeStore } from '@/store/themeStore'
-import { Moon, Sun, Shield, Sparkles, Wallet, TrendingUp, Lock, Mail, User } from 'lucide-react'
+import { Moon, Sun, Shield, Sparkles, Wallet, TrendingUp, Lock, Mail, User, Coins } from 'lucide-react'
 
 type TabType = 'login' | 'register'
 
@@ -90,60 +90,84 @@ export const Login = () => {
   return (
     <div className={`min-h-screen flex items-center justify-center p-4 relative overflow-hidden ${
       isDark 
-        ? 'bg-gradient-to-br from-gray-900 via-black to-gray-900' 
-        : 'bg-gradient-to-br from-gray-50 via-white to-gray-100'
+        ? 'bg-gradient-to-br from-slate-950 via-gray-900 to-black' 
+        : 'bg-gradient-to-br from-emerald-50 via-white to-cyan-50'
     }`}>
-      {/* Animated background elements */}
+      {/* Premium animated background elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-20 left-20 w-96 h-96 bg-green-500 rounded-full mix-blend-screen filter blur-3xl opacity-10 animate-blob"></div>
-        <div className="absolute top-40 right-20 w-96 h-96 bg-blue-500 rounded-full mix-blend-screen filter blur-3xl opacity-10 animate-blob animation-delay-2000"></div>
-        <div className="absolute bottom-20 left-40 w-96 h-96 bg-purple-500 rounded-full mix-blend-screen filter blur-3xl opacity-10 animate-blob animation-delay-4000"></div>
-        <div className="absolute top-1/2 left-1/2 w-96 h-96 bg-cyan-500 rounded-full mix-blend-screen filter blur-3xl opacity-5 animate-blob"></div>
+        {/* Dark theme: Neon glows */}
+        {isDark && (
+          <>
+            <div className="absolute top-20 left-20 w-[500px] h-[500px] bg-emerald-500/20 rounded-full mix-blend-screen filter blur-[100px] animate-blob"></div>
+            <div className="absolute top-40 right-20 w-[500px] h-[500px] bg-cyan-500/20 rounded-full mix-blend-screen filter blur-[100px] animate-blob animation-delay-2000"></div>
+            <div className="absolute bottom-20 left-40 w-[500px] h-[500px] bg-blue-500/20 rounded-full mix-blend-screen filter blur-[100px] animate-blob animation-delay-4000"></div>
+            <div className="absolute top-1/2 left-1/2 w-[400px] h-[400px] bg-purple-500/15 rounded-full mix-blend-screen filter blur-[120px] animate-blob"></div>
+          </>
+        )}
+        {/* Light theme: Soft pastels */}
+        {!isDark && (
+          <>
+            <div className="absolute top-20 left-20 w-96 h-96 bg-emerald-200/40 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob"></div>
+            <div className="absolute top-40 right-20 w-96 h-96 bg-cyan-200/40 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob animation-delay-2000"></div>
+            <div className="absolute bottom-20 left-40 w-96 h-96 bg-blue-200/40 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob animation-delay-4000"></div>
+            <div className="absolute top-1/2 left-1/2 w-96 h-96 bg-purple-200/30 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
+          </>
+        )}
       </div>
 
-      {/* Grid pattern overlay */}
-      <div className={`absolute inset-0 opacity-5 ${
-        isDark ? 'bg-[linear-gradient(rgba(34,197,94,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(34,197,94,0.1)_1px,transparent_1px)] bg-[size:50px_50px]' : 'bg-[linear-gradient(rgba(0,0,0,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.1)_1px,transparent_1px)] bg-[size:50px_50px]'
+      {/* Grid pattern overlay - more subtle */}
+      <div className={`absolute inset-0 ${
+        isDark 
+          ? 'bg-[linear-gradient(rgba(34,197,94,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(34,197,94,0.03)_1px,transparent_1px)] bg-[size:60px_60px]' 
+          : 'bg-[linear-gradient(rgba(16,185,129,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(16,185,129,0.05)_1px,transparent_1px)] bg-[size:60px_60px]'
       }`}></div>
 
+      {/* Main card */}
       <div className={`relative z-10 w-full max-w-md ${
         isDark 
-          ? 'bg-gray-900/80 backdrop-blur-xl border border-green-500/20' 
-          : 'bg-white/90 backdrop-blur-xl border border-gray-200'
-      } rounded-3xl shadow-2xl overflow-hidden crypto-glow`}>
-        {/* Header */}
+          ? 'bg-gray-900/70 backdrop-blur-2xl border border-emerald-500/30 shadow-2xl shadow-emerald-500/10' 
+          : 'bg-white/80 backdrop-blur-2xl border-2 border-emerald-100 shadow-2xl shadow-emerald-500/5'
+      } rounded-3xl overflow-hidden crypto-glow`}>
+        {/* Premium header with gradient */}
         <div className={`relative p-6 ${
           isDark 
-            ? 'bg-gradient-to-r from-green-900/30 to-green-800/20 border-b border-green-500/20' 
-            : 'bg-gradient-to-r from-green-50 to-green-100/50 border-b border-green-200'
+            ? 'bg-gradient-to-r from-emerald-900/40 via-emerald-800/20 to-transparent border-b border-emerald-500/20' 
+            : 'bg-gradient-to-r from-emerald-50 via-emerald-100/50 to-transparent border-b-2 border-emerald-200'
         }`}>
-          <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center justify-between mb-5">
             <div className="flex items-center gap-3">
-              <div className={`p-3 rounded-xl ${
+              <div className={`relative p-3.5 rounded-2xl ${
                 isDark 
-                  ? 'bg-gradient-to-br from-green-500 to-green-600 shadow-lg shadow-green-500/50' 
-                  : 'bg-gradient-to-br from-green-500 to-green-600 shadow-lg'
+                  ? 'bg-gradient-to-br from-emerald-500 via-emerald-600 to-emerald-700 shadow-lg shadow-emerald-500/50' 
+                  : 'bg-gradient-to-br from-emerald-500 via-emerald-600 to-emerald-700 shadow-lg shadow-emerald-500/30'
               }`}>
                 <Shield className="w-7 h-7 text-white" />
+                <div className={`absolute inset-0 rounded-2xl ${
+                  isDark ? 'bg-emerald-400/20' : 'bg-white/20'
+                } animate-pulse`}></div>
               </div>
               <div>
                 <h1 className={`text-2xl font-bold flex items-center gap-2 ${
                   isDark ? 'text-white' : 'text-gray-900'
                 }`}>
                   ApeVault
-                  <Sparkles className="w-5 h-5 text-green-500" />
+                  <Sparkles className={`w-5 h-5 ${
+                    isDark ? 'text-emerald-400' : 'text-emerald-600'
+                  }`} />
                 </h1>
-                <p className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
+                <p className={`text-sm font-medium ${
+                  isDark ? 'text-gray-400' : 'text-gray-600'
+                }`}>
                   Крипто-платформа для учеников
                 </p>
               </div>
             </div>
             <button
               onClick={toggleTheme}
-              className={`p-2.5 rounded-xl transition-all ${
+              className={`p-2.5 rounded-xl transition-all duration-300 ${
                 isDark 
-                  ? 'bg-gray-800 hover:bg-gray-700 text-yellow-400' 
-                  : 'bg-gray-100 hover:bg-gray-200 text-gray-700'
+                  ? 'bg-gray-800/50 hover:bg-gray-700/50 text-yellow-400 border border-gray-700' 
+                  : 'bg-emerald-50 hover:bg-emerald-100 text-gray-700 border border-emerald-200'
               }`}
               aria-label="Toggle theme"
             >
@@ -155,21 +179,21 @@ export const Login = () => {
             </button>
           </div>
 
-          {/* Tabs */}
-          <div className="flex gap-2">
+          {/* Premium tabs */}
+          <div className="flex gap-2.5">
             <button
               onClick={() => {
                 setActiveTab('login')
                 setError('')
               }}
-              className={`flex-1 py-2.5 px-4 rounded-lg font-medium transition-all ${
+              className={`flex-1 py-3 px-4 rounded-xl font-semibold transition-all duration-300 ${
                 activeTab === 'login'
                   ? isDark
-                    ? 'bg-green-500/20 text-green-400 border border-green-500/30'
-                    : 'bg-green-500 text-white shadow-lg'
+                    ? 'bg-emerald-500/20 text-emerald-400 border-2 border-emerald-500/40 shadow-lg shadow-emerald-500/20'
+                    : 'bg-emerald-500 text-white shadow-lg shadow-emerald-500/30 border-2 border-emerald-600'
                   : isDark
-                  ? 'text-gray-400 hover:text-white hover:bg-gray-800'
-                  : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
+                  ? 'text-gray-400 hover:text-white hover:bg-gray-800/50 border-2 border-transparent'
+                  : 'text-gray-600 hover:text-gray-900 hover:bg-emerald-50 border-2 border-transparent'
               }`}
             >
               <div className="flex items-center justify-center gap-2">
@@ -182,14 +206,14 @@ export const Login = () => {
                 setActiveTab('register')
                 setError('')
               }}
-              className={`flex-1 py-2.5 px-4 rounded-lg font-medium transition-all ${
+              className={`flex-1 py-3 px-4 rounded-xl font-semibold transition-all duration-300 ${
                 activeTab === 'register'
                   ? isDark
-                    ? 'bg-green-500/20 text-green-400 border border-green-500/30'
-                    : 'bg-green-500 text-white shadow-lg'
+                    ? 'bg-emerald-500/20 text-emerald-400 border-2 border-emerald-500/40 shadow-lg shadow-emerald-500/20'
+                    : 'bg-emerald-500 text-white shadow-lg shadow-emerald-500/30 border-2 border-emerald-600'
                   : isDark
-                  ? 'text-gray-400 hover:text-white hover:bg-gray-800'
-                  : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
+                  ? 'text-gray-400 hover:text-white hover:bg-gray-800/50 border-2 border-transparent'
+                  : 'text-gray-600 hover:text-gray-900 hover:bg-emerald-50 border-2 border-transparent'
               }`}
             >
               <div className="flex items-center justify-center gap-2">
@@ -200,29 +224,29 @@ export const Login = () => {
           </div>
         </div>
 
-        {/* Form */}
+        {/* Form container */}
         <div className="p-6">
           {activeTab === 'login' ? (
             <form onSubmit={handleLogin} className="space-y-5">
               <div>
-                <label htmlFor="login" className={`block text-sm font-medium mb-2 ${
+                <label htmlFor="login" className={`block text-sm font-semibold mb-2.5 ${
                   isDark ? 'text-gray-300' : 'text-gray-700'
                 }`}>
                   Логин
                 </label>
-                <div className="relative">
-                  <User className={`absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 ${
-                    isDark ? 'text-gray-500' : 'text-gray-400'
+                <div className="relative group">
+                  <User className={`absolute left-3.5 top-1/2 -translate-y-1/2 w-5 h-5 transition-colors ${
+                    isDark ? 'text-gray-500 group-focus-within:text-emerald-400' : 'text-gray-400 group-focus-within:text-emerald-600'
                   }`} />
                   <input
                     id="login"
                     type="text"
                     value={login}
                     onChange={(e) => setLogin(e.target.value)}
-                    className={`w-full pl-10 pr-4 py-3 rounded-xl border transition-all ${
+                    className={`w-full pl-11 pr-4 py-3.5 rounded-xl border-2 transition-all duration-200 ${
                       isDark
-                        ? 'border-gray-700 bg-gray-800/50 text-white placeholder-gray-500 focus:border-green-500 focus:ring-2 focus:ring-green-500/20'
-                        : 'border-gray-300 bg-white text-gray-900 placeholder-gray-400 focus:border-green-500 focus:ring-2 focus:ring-green-500/20'
+                        ? 'border-gray-700 bg-gray-800/60 text-white placeholder-gray-500 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 focus:bg-gray-800'
+                        : 'border-gray-300 bg-white text-gray-900 placeholder-gray-400 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 focus:bg-emerald-50/50'
                     }`}
                     placeholder="Введите логин"
                     autoComplete="username"
@@ -231,24 +255,24 @@ export const Login = () => {
               </div>
 
               <div>
-                <label htmlFor="password" className={`block text-sm font-medium mb-2 ${
+                <label htmlFor="password" className={`block text-sm font-semibold mb-2.5 ${
                   isDark ? 'text-gray-300' : 'text-gray-700'
                 }`}>
                   Пароль
                 </label>
-                <div className="relative">
-                  <Lock className={`absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 ${
-                    isDark ? 'text-gray-500' : 'text-gray-400'
+                <div className="relative group">
+                  <Lock className={`absolute left-3.5 top-1/2 -translate-y-1/2 w-5 h-5 transition-colors ${
+                    isDark ? 'text-gray-500 group-focus-within:text-emerald-400' : 'text-gray-400 group-focus-within:text-emerald-600'
                   }`} />
                   <input
                     id="password"
                     type="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className={`w-full pl-10 pr-4 py-3 rounded-xl border transition-all ${
+                    className={`w-full pl-11 pr-4 py-3.5 rounded-xl border-2 transition-all duration-200 ${
                       isDark
-                        ? 'border-gray-700 bg-gray-800/50 text-white placeholder-gray-500 focus:border-green-500 focus:ring-2 focus:ring-green-500/20'
-                        : 'border-gray-300 bg-white text-gray-900 placeholder-gray-400 focus:border-green-500 focus:ring-2 focus:ring-green-500/20'
+                        ? 'border-gray-700 bg-gray-800/60 text-white placeholder-gray-500 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 focus:bg-gray-800'
+                        : 'border-gray-300 bg-white text-gray-900 placeholder-gray-400 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 focus:bg-emerald-50/50'
                     }`}
                     placeholder="Введите пароль"
                     autoComplete="current-password"
@@ -257,23 +281,26 @@ export const Login = () => {
               </div>
 
               {error && (
-                <div className={`p-3 rounded-xl ${
+                <div className={`p-4 rounded-xl border-2 ${
                   isDark 
-                    ? 'bg-red-900/30 text-red-300 border border-red-700/50' 
-                    : 'bg-red-50 text-red-800 border border-red-200'
+                    ? 'bg-red-900/20 text-red-300 border-red-700/50' 
+                    : 'bg-red-50 text-red-800 border-red-200'
                 } animate-shake`}>
-                  {error}
+                  <div className="flex items-center gap-2">
+                    <div className="w-1.5 h-1.5 rounded-full bg-current"></div>
+                    {error}
+                  </div>
                 </div>
               )}
 
               <button
                 type="submit"
                 disabled={loading}
-                className={`w-full py-3.5 rounded-xl font-semibold transition-all ${
+                className={`w-full py-4 rounded-xl font-bold text-base transition-all duration-300 ${
                   isDark
-                    ? 'bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white shadow-lg shadow-green-500/30'
-                    : 'bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white shadow-lg'
-                } disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2`}
+                    ? 'bg-gradient-to-r from-emerald-500 via-emerald-600 to-emerald-700 hover:from-emerald-600 hover:via-emerald-700 hover:to-emerald-800 text-white shadow-lg shadow-emerald-500/30 hover:shadow-emerald-500/50'
+                    : 'bg-gradient-to-r from-emerald-500 via-emerald-600 to-emerald-700 hover:from-emerald-600 hover:via-emerald-700 hover:to-emerald-800 text-white shadow-lg shadow-emerald-500/20 hover:shadow-emerald-500/40'
+                } disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 transform hover:scale-[1.02] active:scale-[0.98]`}
               >
                 {loading ? (
                   <>
@@ -291,24 +318,24 @@ export const Login = () => {
           ) : (
             <form onSubmit={handleRegister} className="space-y-5">
               <div>
-                <label htmlFor="name" className={`block text-sm font-medium mb-2 ${
+                <label htmlFor="name" className={`block text-sm font-semibold mb-2.5 ${
                   isDark ? 'text-gray-300' : 'text-gray-700'
                 }`}>
                   Имя
                 </label>
-                <div className="relative">
-                  <User className={`absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 ${
-                    isDark ? 'text-gray-500' : 'text-gray-400'
+                <div className="relative group">
+                  <User className={`absolute left-3.5 top-1/2 -translate-y-1/2 w-5 h-5 transition-colors ${
+                    isDark ? 'text-gray-500 group-focus-within:text-emerald-400' : 'text-gray-400 group-focus-within:text-emerald-600'
                   }`} />
                   <input
                     id="name"
                     type="text"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    className={`w-full pl-10 pr-4 py-3 rounded-xl border transition-all ${
+                    className={`w-full pl-11 pr-4 py-3.5 rounded-xl border-2 transition-all duration-200 ${
                       isDark
-                        ? 'border-gray-700 bg-gray-800/50 text-white placeholder-gray-500 focus:border-green-500 focus:ring-2 focus:ring-green-500/20'
-                        : 'border-gray-300 bg-white text-gray-900 placeholder-gray-400 focus:border-green-500 focus:ring-2 focus:ring-green-500/20'
+                        ? 'border-gray-700 bg-gray-800/60 text-white placeholder-gray-500 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 focus:bg-gray-800'
+                        : 'border-gray-300 bg-white text-gray-900 placeholder-gray-400 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 focus:bg-emerald-50/50'
                     }`}
                     placeholder="Введите ваше имя"
                     autoComplete="name"
@@ -317,24 +344,24 @@ export const Login = () => {
               </div>
 
               <div>
-                <label htmlFor="email" className={`block text-sm font-medium mb-2 ${
+                <label htmlFor="email" className={`block text-sm font-semibold mb-2.5 ${
                   isDark ? 'text-gray-300' : 'text-gray-700'
                 }`}>
                   Email
                 </label>
-                <div className="relative">
-                  <Mail className={`absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 ${
-                    isDark ? 'text-gray-500' : 'text-gray-400'
+                <div className="relative group">
+                  <Mail className={`absolute left-3.5 top-1/2 -translate-y-1/2 w-5 h-5 transition-colors ${
+                    isDark ? 'text-gray-500 group-focus-within:text-emerald-400' : 'text-gray-400 group-focus-within:text-emerald-600'
                   }`} />
                   <input
                     id="email"
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className={`w-full pl-10 pr-4 py-3 rounded-xl border transition-all ${
+                    className={`w-full pl-11 pr-4 py-3.5 rounded-xl border-2 transition-all duration-200 ${
                       isDark
-                        ? 'border-gray-700 bg-gray-800/50 text-white placeholder-gray-500 focus:border-green-500 focus:ring-2 focus:ring-green-500/20'
-                        : 'border-gray-300 bg-white text-gray-900 placeholder-gray-400 focus:border-green-500 focus:ring-2 focus:ring-green-500/20'
+                        ? 'border-gray-700 bg-gray-800/60 text-white placeholder-gray-500 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 focus:bg-gray-800'
+                        : 'border-gray-300 bg-white text-gray-900 placeholder-gray-400 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 focus:bg-emerald-50/50'
                     }`}
                     placeholder="your@email.com"
                     autoComplete="email"
@@ -343,24 +370,24 @@ export const Login = () => {
               </div>
 
               <div>
-                <label htmlFor="reg-login" className={`block text-sm font-medium mb-2 ${
+                <label htmlFor="reg-login" className={`block text-sm font-semibold mb-2.5 ${
                   isDark ? 'text-gray-300' : 'text-gray-700'
                 }`}>
                   Логин
                 </label>
-                <div className="relative">
-                  <User className={`absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 ${
-                    isDark ? 'text-gray-500' : 'text-gray-400'
+                <div className="relative group">
+                  <User className={`absolute left-3.5 top-1/2 -translate-y-1/2 w-5 h-5 transition-colors ${
+                    isDark ? 'text-gray-500 group-focus-within:text-emerald-400' : 'text-gray-400 group-focus-within:text-emerald-600'
                   }`} />
                   <input
                     id="reg-login"
                     type="text"
                     value={login}
                     onChange={(e) => setLogin(e.target.value)}
-                    className={`w-full pl-10 pr-4 py-3 rounded-xl border transition-all ${
+                    className={`w-full pl-11 pr-4 py-3.5 rounded-xl border-2 transition-all duration-200 ${
                       isDark
-                        ? 'border-gray-700 bg-gray-800/50 text-white placeholder-gray-500 focus:border-green-500 focus:ring-2 focus:ring-green-500/20'
-                        : 'border-gray-300 bg-white text-gray-900 placeholder-gray-400 focus:border-green-500 focus:ring-2 focus:ring-green-500/20'
+                        ? 'border-gray-700 bg-gray-800/60 text-white placeholder-gray-500 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 focus:bg-gray-800'
+                        : 'border-gray-300 bg-white text-gray-900 placeholder-gray-400 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 focus:bg-emerald-50/50'
                     }`}
                     placeholder="Введите логин"
                     autoComplete="username"
@@ -369,24 +396,24 @@ export const Login = () => {
               </div>
 
               <div>
-                <label htmlFor="reg-password" className={`block text-sm font-medium mb-2 ${
+                <label htmlFor="reg-password" className={`block text-sm font-semibold mb-2.5 ${
                   isDark ? 'text-gray-300' : 'text-gray-700'
                 }`}>
                   Пароль
                 </label>
-                <div className="relative">
-                  <Lock className={`absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 ${
-                    isDark ? 'text-gray-500' : 'text-gray-400'
+                <div className="relative group">
+                  <Lock className={`absolute left-3.5 top-1/2 -translate-y-1/2 w-5 h-5 transition-colors ${
+                    isDark ? 'text-gray-500 group-focus-within:text-emerald-400' : 'text-gray-400 group-focus-within:text-emerald-600'
                   }`} />
                   <input
                     id="reg-password"
                     type="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className={`w-full pl-10 pr-4 py-3 rounded-xl border transition-all ${
+                    className={`w-full pl-11 pr-4 py-3.5 rounded-xl border-2 transition-all duration-200 ${
                       isDark
-                        ? 'border-gray-700 bg-gray-800/50 text-white placeholder-gray-500 focus:border-green-500 focus:ring-2 focus:ring-green-500/20'
-                        : 'border-gray-300 bg-white text-gray-900 placeholder-gray-400 focus:border-green-500 focus:ring-2 focus:ring-green-500/20'
+                        ? 'border-gray-700 bg-gray-800/60 text-white placeholder-gray-500 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 focus:bg-gray-800'
+                        : 'border-gray-300 bg-white text-gray-900 placeholder-gray-400 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 focus:bg-emerald-50/50'
                     }`}
                     placeholder="Минимум 6 символов"
                     autoComplete="new-password"
@@ -395,24 +422,24 @@ export const Login = () => {
               </div>
 
               <div>
-                <label htmlFor="confirm-password" className={`block text-sm font-medium mb-2 ${
+                <label htmlFor="confirm-password" className={`block text-sm font-semibold mb-2.5 ${
                   isDark ? 'text-gray-300' : 'text-gray-700'
                 }`}>
                   Подтвердите пароль
                 </label>
-                <div className="relative">
-                  <Lock className={`absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 ${
-                    isDark ? 'text-gray-500' : 'text-gray-400'
+                <div className="relative group">
+                  <Lock className={`absolute left-3.5 top-1/2 -translate-y-1/2 w-5 h-5 transition-colors ${
+                    isDark ? 'text-gray-500 group-focus-within:text-emerald-400' : 'text-gray-400 group-focus-within:text-emerald-600'
                   }`} />
                   <input
                     id="confirm-password"
                     type="password"
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
-                    className={`w-full pl-10 pr-4 py-3 rounded-xl border transition-all ${
+                    className={`w-full pl-11 pr-4 py-3.5 rounded-xl border-2 transition-all duration-200 ${
                       isDark
-                        ? 'border-gray-700 bg-gray-800/50 text-white placeholder-gray-500 focus:border-green-500 focus:ring-2 focus:ring-green-500/20'
-                        : 'border-gray-300 bg-white text-gray-900 placeholder-gray-400 focus:border-green-500 focus:ring-2 focus:ring-green-500/20'
+                        ? 'border-gray-700 bg-gray-800/60 text-white placeholder-gray-500 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 focus:bg-gray-800'
+                        : 'border-gray-300 bg-white text-gray-900 placeholder-gray-400 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 focus:bg-emerald-50/50'
                     }`}
                     placeholder="Повторите пароль"
                     autoComplete="new-password"
@@ -421,23 +448,26 @@ export const Login = () => {
               </div>
 
               {error && (
-                <div className={`p-3 rounded-xl ${
+                <div className={`p-4 rounded-xl border-2 ${
                   isDark 
-                    ? 'bg-red-900/30 text-red-300 border border-red-700/50' 
-                    : 'bg-red-50 text-red-800 border border-red-200'
+                    ? 'bg-red-900/20 text-red-300 border-red-700/50' 
+                    : 'bg-red-50 text-red-800 border-red-200'
                 } animate-shake`}>
-                  {error}
+                  <div className="flex items-center gap-2">
+                    <div className="w-1.5 h-1.5 rounded-full bg-current"></div>
+                    {error}
+                  </div>
                 </div>
               )}
 
               <button
                 type="submit"
                 disabled={loading}
-                className={`w-full py-3.5 rounded-xl font-semibold transition-all ${
+                className={`w-full py-4 rounded-xl font-bold text-base transition-all duration-300 ${
                   isDark
-                    ? 'bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white shadow-lg shadow-green-500/30'
-                    : 'bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white shadow-lg'
-                } disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2`}
+                    ? 'bg-gradient-to-r from-emerald-500 via-emerald-600 to-emerald-700 hover:from-emerald-600 hover:via-emerald-700 hover:to-emerald-800 text-white shadow-lg shadow-emerald-500/30 hover:shadow-emerald-500/50'
+                    : 'bg-gradient-to-r from-emerald-500 via-emerald-600 to-emerald-700 hover:from-emerald-600 hover:via-emerald-700 hover:to-emerald-800 text-white shadow-lg shadow-emerald-500/20 hover:shadow-emerald-500/40'
+                } disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 transform hover:scale-[1.02] active:scale-[0.98]`}
               >
                 {loading ? (
                   <>
@@ -455,13 +485,22 @@ export const Login = () => {
           )}
         </div>
 
-        {/* Footer decoration */}
-        <div className={`p-4 text-center border-t ${
-          isDark ? 'border-gray-800' : 'border-gray-200'
+        {/* Premium footer */}
+        <div className={`p-5 text-center border-t ${
+          isDark 
+            ? 'border-gray-800 bg-gradient-to-r from-transparent via-gray-900/50 to-transparent' 
+            : 'border-emerald-100 bg-gradient-to-r from-transparent via-emerald-50/50 to-transparent'
         }`}>
-          <p className={`text-xs ${isDark ? 'text-gray-500' : 'text-gray-400'}`}>
-            Безопасная крипто-платформа для обучения
-          </p>
+          <div className="flex items-center justify-center gap-2 mb-1">
+            <Coins className={`w-4 h-4 ${
+              isDark ? 'text-emerald-400' : 'text-emerald-600'
+            }`} />
+            <p className={`text-xs font-medium ${
+              isDark ? 'text-gray-400' : 'text-gray-500'
+            }`}>
+              Безопасная крипто-платформа для обучения
+            </p>
+          </div>
         </div>
       </div>
     </div>
