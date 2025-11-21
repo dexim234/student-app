@@ -1,7 +1,6 @@
 // Main App component with routing for students
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { useAuthStore } from './store/authStore'
-import { useThemeStore } from './store/themeStore'
 import { useEffect } from 'react'
 import { Login } from './pages/Login'
 import { Profile } from './pages/Profile'
@@ -14,12 +13,11 @@ import { ProtectedRoute } from './components/ProtectedRoute'
 
 function App() {
   const { isAuthenticated } = useAuthStore()
-  const { theme } = useThemeStore()
 
   useEffect(() => {
-    // Apply theme on mount
-    document.body.classList.toggle('dark', theme === 'dark')
-  }, [theme])
+    // Apply dark theme on mount
+    document.body.classList.add('dark')
+  }, [])
 
   return (
     <BrowserRouter>
