@@ -10,7 +10,7 @@ export const Login = () => {
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const { login: loginUser } = useAuthStore()
-  const { theme, toggleTheme, setTheme } = useThemeStore()
+  const { theme, toggleTheme } = useThemeStore()
   const navigate = useNavigate()
 
   useEffect(() => {

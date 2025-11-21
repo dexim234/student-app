@@ -1,12 +1,7 @@
 // Firestore service for students app
 import {
   collection,
-  doc,
-  getDoc,
   getDocs,
-  addDoc,
-  updateDoc,
-  deleteDoc,
   query,
   where,
   orderBy,
