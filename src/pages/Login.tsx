@@ -2,7 +2,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuthStore } from '@/store/authStore'
-import { Shield, Sparkles, Wallet, TrendingUp, Lock, Mail, User, Coins } from 'lucide-react'
+import { Sparkles, Wallet, TrendingUp, Lock, Mail, User, Coins } from 'lucide-react'
 
 type TabType = 'login' | 'register'
 
@@ -107,24 +107,16 @@ export const Login = () => {
       <div className="relative z-10 w-full max-w-md bg-gray-900/75 backdrop-blur-2xl border border-emerald-500/30 shadow-2xl shadow-emerald-500/10 rounded-2xl sm:rounded-3xl overflow-hidden crypto-glow">
         {/* Premium header with gradient - responsive padding */}
         <div className="relative p-4 sm:p-5 md:p-6 bg-gradient-to-r from-emerald-900/40 via-emerald-800/20 to-transparent border-b border-emerald-500/20">
-          <div className="flex items-center justify-between mb-4 sm:mb-5">
-            <div className="flex items-center gap-2 sm:gap-3">
-              <div className="relative p-2.5 sm:p-3.5 rounded-xl sm:rounded-2xl bg-gradient-to-br from-emerald-500 via-emerald-600 to-emerald-700 shadow-lg shadow-emerald-500/50">
-                <Shield className="w-5 h-5 sm:w-7 sm:h-7 text-white" />
-                <div className="absolute inset-0 rounded-xl sm:rounded-2xl bg-emerald-400/20 animate-pulse"></div>
-              </div>
-              <div>
-                <h1 className="text-xl sm:text-2xl font-bold flex items-center gap-1.5 sm:gap-2 text-white">
-                  ApeVault
-                  <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-400" />
-                </h1>
-                <p className="text-xs sm:text-sm font-medium text-gray-400">
-                  сообщество криптанов
-                </p>
-                <p className="text-xs font-medium text-gray-500 mt-0.5">
-                  крипто-платформа ApeVault
-                </p>
-              </div>
+          <div className="flex items-center justify-center mb-4 sm:mb-5">
+            <div className="text-center">
+              <h1 className="text-2xl sm:text-3xl font-bold flex items-center justify-center gap-2 text-white mb-2">
+                <Sparkles className="w-5 h-5 sm:w-6 sm:h-6 text-emerald-400" />
+                ApeVault
+                <Sparkles className="w-5 h-5 sm:w-6 sm:h-6 text-emerald-400" />
+              </h1>
+              <p className="text-sm sm:text-base font-medium text-gray-400">
+                крипто-платформа ApeVault
+              </p>
             </div>
           </div>
 
