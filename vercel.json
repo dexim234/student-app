@@ -1,0 +1,8 @@
+{
+  "buildCommand": "cd students-app && npm install && npm run build",
+  "outputDirectory": "students-app/dist",
+  "devCommand": "cd students-app && npm run dev",
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/" }
+  ]
+}
