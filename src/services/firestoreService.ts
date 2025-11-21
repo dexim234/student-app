@@ -5,9 +5,23 @@ import {
   query,
   where,
   orderBy,
+  addDoc,
+  doc,
+  getDoc,
+  setDoc,
 } from 'firebase/firestore'
 import { db } from '@/firebase/config'
 import { Call } from '@/types'
+
+export interface StudentData {
+  id?: string
+  name: string
+  email: string
+  login: string
+  password: string
+  createdAt: string
+  updatedAt: string
+}
 
 // Call (Trading Signal) functions - for students to view calls
 export const getCalls = async (filters?: {
@@ -82,4 +96,69 @@ export const getCalls = async (filters?: {
   }
 
   return calls
+}
+
+// Student registration and authentication functions
+export const registerStudent = async (studentData: {
+  name: string
+  email: string
+  login: string
+  password: string
+}): Promise<{ success: boolean; error?: string; studentId?: string }> => {
+  try {
+    // Check if login already exists
+    const studentsRef = collection(db, 'students')
+    const loginQuery = query(studentsRef, where('login', '==', studentData.login))
+    const loginSnapshot = await getDocs(loginQuery)
+    
+    if (!loginSnapshot.empty) {
+      return { success: false, error: 'Логин уже занят' }
+    }
+
+    // Check if email already exists
+    const emailQuery = query(studentsRef, where('email', '==', studentData.email))
+    const emailSnapshot = await getDocs(emailQuery)
+    
+    if (!emailSnapshot.empty) {
+      return { success: false, error: 'Email уже зарегистрирован' }
+    }
+
+    // Create new student
+    const now = new Date().toISOString()
+    const newStudent: Omit<StudentData, 'id'> = {
+      name: studentData.name,
+      email: studentData.email,
+      login: studentData.login,
+      password: studentData.password, // В продакшене нужно хешировать пароль
+      createdAt: now,
+      updatedAt: now,
+    }
+
+    const docRef = await addDoc(studentsRef, newStudent)
+    return { success: true, studentId: docRef.id }
+  } catch (error: any) {
+    console.error('Error registering student:', error)
+    return { success: false, error: error.message || 'Ошибка при регистрации' }
+  }
+}
+
+export const getStudentByLogin = async (login: string): Promise<StudentData | null> => {
+  try {
+    const studentsRef = collection(db, 'students')
+    const q = query(studentsRef, where('login', '==', login))
+    const snapshot = await getDocs(q)
+    
+    if (snapshot.empty) {
+      return null
+    }
+
+    const doc = snapshot.docs[0]
+    return {
+      id: doc.id,
+      ...doc.data(),
+    } as StudentData
+  } catch (error) {
+    console.error('Error getting student:', error)
+    return null
+  }
 }
