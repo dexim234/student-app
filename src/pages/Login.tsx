@@ -7,15 +7,18 @@ import { Sparkles, Wallet, TrendingUp, Lock, Mail, User, Coins } from 'lucide-re
 type TabType = 'login' | 'register'
 
 export const Login = () => {
+  // Регистрация отключена - оставляем только вход
   const [activeTab, setActiveTab] = useState<TabType>('login')
   const [login, setLogin] = useState('')
   const [password, setPassword] = useState('')
-  const [name, setName] = useState('')
-  const [email, setEmail] = useState('')
-  const [confirmPassword, setConfirmPassword] = useState('')
+  // Переменные для регистрации сохранены, но не используются (регистрация отключена)
+  // const [name, setName] = useState('')
+  // const [email, setEmail] = useState('')
+  // const [confirmPassword, setConfirmPassword] = useState('')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
-  const { login: loginUser, register } = useAuthStore()
+  const { login: loginUser } = useAuthStore()
+  // const { login: loginUser, register } = useAuthStore() // register отключен
   const navigate = useNavigate()
 
   const handleLogin = async (e: React.FormEvent) => {
@@ -45,6 +48,8 @@ export const Login = () => {
     }
   }
 
+  // Функция регистрации отключена, но код сохранен для возможного восстановления
+  /*
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault()
     setError('')
@@ -90,6 +95,7 @@ export const Login = () => {
       setLoading(false)
     }
   }
+  */
 
   return (
     <div className="min-h-screen flex items-center justify-center p-3 sm:p-4 md:p-6 relative overflow-hidden bg-gradient-to-br from-slate-950 via-gray-900 to-black">
@@ -133,24 +139,22 @@ export const Login = () => {
           </div>
 
           {/* Premium tabs - responsive */}
+          {/* Регистрация отключена - показываем только вход */}
           <div className="flex gap-2 sm:gap-2.5">
             <button
               onClick={() => {
                 setActiveTab('login')
                 setError('')
               }}
-              className={`flex-1 py-2.5 sm:py-3 px-3 sm:px-4 rounded-lg sm:rounded-xl text-sm sm:text-base font-semibold transition-all duration-300 ${
-                activeTab === 'login'
-                  ? 'bg-emerald-500/20 text-emerald-400 border-2 border-emerald-500/40 shadow-lg shadow-emerald-500/20'
-                  : 'text-gray-400 hover:text-white hover:bg-gray-800/50 border-2 border-transparent'
-              }`}
+              className="flex-1 py-2.5 sm:py-3 px-3 sm:px-4 rounded-lg sm:rounded-xl text-sm sm:text-base font-semibold transition-all duration-300 bg-emerald-500/20 text-emerald-400 border-2 border-emerald-500/40 shadow-lg shadow-emerald-500/20"
             >
               <div className="flex items-center justify-center gap-1.5 sm:gap-2">
                 <Lock className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                 <span>Вход</span>
               </div>
             </button>
-            <button
+            {/* Кнопка регистрации скрыта, но код сохранен для возможного восстановления */}
+            {/* <button
               onClick={() => {
                 setActiveTab('register')
                 setError('')
@@ -166,12 +170,13 @@ export const Login = () => {
                 <span className="hidden xs:inline">Регистрация</span>
                 <span className="xs:hidden">Рег.</span>
               </div>
-            </button>
+            </button> */}
           </div>
         </div>
 
         {/* Form container - responsive padding */}
         <div className="p-4 sm:p-5 md:p-6">
+          {/* Регистрация отключена - показываем только форму входа */}
           {activeTab === 'login' ? (
             <form onSubmit={handleLogin} className="space-y-4 sm:space-y-5">
               <div>
@@ -238,6 +243,9 @@ export const Login = () => {
               </button>
             </form>
           ) : (
+            /* Форма регистрации отключена, но код сохранен для возможного восстановления */
+            null
+            /* 
             <form onSubmit={handleRegister} className="space-y-4 sm:space-y-5">
               <div>
                 <label htmlFor="name" className="block text-xs sm:text-sm font-semibold mb-2 sm:mb-2.5 text-gray-300">
@@ -356,6 +364,7 @@ export const Login = () => {
                 )}
               </button>
             </form>
+            */
           )}
         </div>
 

@@ -54,7 +54,12 @@ export const useAuthStore = create<AuthState>()(
           return false
         }
       },
+      // Регистрация отключена, но функция сохранена для возможного восстановления
       register: async (name: string, email: string, login: string, password: string) => {
+        // Регистрация временно отключена
+        return { success: false, error: 'Регистрация временно недоступна' }
+        
+        /* Код регистрации сохранен для возможного восстановления
         try {
           console.log('Attempting registration for:', login, email)
           const result = await registerStudent({ name, email, login, password })
@@ -76,6 +81,7 @@ export const useAuthStore = create<AuthState>()(
           console.error('Registration error:', error)
           return { success: false, error: error.message || 'Ошибка при регистрации' }
         }
+        */
       },
       logout: () => set({ user: null, isAuthenticated: false }),
     }),
