@@ -1,3 +1,9 @@
+// src/components/Layout.tsx (Lines 1-107)
+// Main layout component for students app
+import { Link, useLocation } from 'react-router-dom'
+import { LogOut, User, Wallet, Users, TrendingUp, Settings, Sparkles } from 'lucide-react'
+import { useAuthStore } from '@/store/authStore'
+
 export const Layout = ({ children }: { children: React.ReactNode }) => {
   const { logout, user } = useAuthStore()
   const location = useLocation()

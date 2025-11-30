@@ -6,7 +6,6 @@ import { useAuthStore } from '@/store/authStore'
 import { 
   User, 
   Wallet, 
-  Key, 
   Globe, 
   Shield, 
   Palette,
