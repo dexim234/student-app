@@ -103,10 +103,21 @@ export const registerStudent = async (studentData: {
   password: string
 }): Promise<{ success: boolean; error?: string; studentId?: string }> => {
   try {
+    // Check if Firebase is properly configured
+    if (!db) {
+      console.error('Firestore database is not initialized')
+      return { success: false, error: 'База данных не настроена. Проверьте конфигурацию Firebase.' }
+    }
+
     // Check if login already exists
     const studentsRef = collection(db, 'students')
     const loginQuery = query(studentsRef, where('login', '==', studentData.login))
-    const loginSnapshot = await getDocs(loginQuery)
+    
+    // Add timeout to prevent infinite waiting
+    const loginSnapshot = await Promise.race([
+      getDocs(loginQuery),
+      new Promise((_, reject) => setTimeout(() => reject(new Error('Таймаут запроса')), 10000))
+    ]) as any
     
     if (!loginSnapshot.empty) {
       return { success: false, error: 'Логин уже занят' }
@@ -114,7 +125,10 @@ export const registerStudent = async (studentData: {
 
     // Check if email already exists
     const emailQuery = query(studentsRef, where('email', '==', studentData.email))
-    const emailSnapshot = await getDocs(emailQuery)
+    const emailSnapshot = await Promise.race([
+      getDocs(emailQuery),
+      new Promise((_, reject) => setTimeout(() => reject(new Error('Таймаут запроса')), 10000))
+    ]) as any
     
     if (!emailSnapshot.empty) {
       return { success: false, error: 'Email уже зарегистрирован' }
@@ -131,19 +145,46 @@ export const registerStudent = async (studentData: {
       updatedAt: now,
     }
 
-    const docRef = await addDoc(studentsRef, newStudent)
+    const docRef = await Promise.race([
+      addDoc(studentsRef, newStudent),
+      new Promise((_, reject) => setTimeout(() => reject(new Error('Таймаут запроса')), 10000))
+    ]) as any
+    
     return { success: true, studentId: docRef.id }
   } catch (error: any) {
     console.error('Error registering student:', error)
+    
+    // More specific error messages
+    if (error.code === 'permission-denied') {
+      return { success: false, error: 'Нет доступа к базе данных. Проверьте правила Firestore.' }
+    }
+    if (error.code === 'unavailable') {
+      return { success: false, error: 'Сервис временно недоступен. Попробуйте позже.' }
+    }
+    if (error.message === 'Таймаут запроса') {
+      return { success: false, error: 'Превышено время ожидания. Проверьте подключение к интернету.' }
+    }
+    
     return { success: false, error: error.message || 'Ошибка при регистрации' }
   }
 }
 
 export const getStudentByLogin = async (login: string): Promise<StudentData | null> => {
   try {
+    // Check if Firebase is properly configured
+    if (!db) {
+      console.error('Firestore database is not initialized')
+      return null
+    }
+
     const studentsRef = collection(db, 'students')
     const q = query(studentsRef, where('login', '==', login))
-    const snapshot = await getDocs(q)
+    
+    // Add timeout to prevent infinite waiting
+    const snapshot = await Promise.race([
+      getDocs(q),
+      new Promise((_, reject) => setTimeout(() => reject(new Error('Таймаут запроса')), 10000))
+    ]) as any
     
     if (snapshot.empty) {
       return null
@@ -154,8 +195,14 @@ export const getStudentByLogin = async (login: string): Promise<StudentData | nu
       id: doc.id,
       ...doc.data(),
     } as StudentData
-  } catch (error) {
+  } catch (error: any) {
     console.error('Error getting student:', error)
+    
+    // Log specific error for debugging
+    if (error.code) {
+      console.error('Firestore error code:', error.code)
+    }
+    
     return null
   }
 }

@@ -23,19 +23,25 @@ export const Login = () => {
     setError('')
     setLoading(true)
 
-    if (!login || !password) {
-      setError('Введите логин и пароль')
-      setLoading(false)
-      return
-    }
+    try {
+      if (!login || !password) {
+        setError('Введите логин и пароль')
+        setLoading(false)
+        return
+      }
 
-    const success = await loginUser(login, password)
-    setLoading(false)
-    
-    if (success) {
-      navigate('/club')
-    } else {
-      setError('Неверный логин или пароль')
+      const success = await loginUser(login, password)
+      
+      if (success) {
+        navigate('/club')
+      } else {
+        setError('Неверный логин или пароль')
+      }
+    } catch (error: any) {
+      console.error('Login form error:', error)
+      setError(error.message || 'Произошла ошибка при входе')
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -44,38 +50,44 @@ export const Login = () => {
     setError('')
     setLoading(true)
 
-    if (!name || !email || !login || !password || !confirmPassword) {
-      setError('Заполните все поля')
-      setLoading(false)
-      return
-    }
+    try {
+      if (!name || !email || !login || !password || !confirmPassword) {
+        setError('Заполните все поля')
+        setLoading(false)
+        return
+      }
 
-    if (password !== confirmPassword) {
-      setError('Пароли не совпадают')
-      setLoading(false)
-      return
-    }
+      if (password !== confirmPassword) {
+        setError('Пароли не совпадают')
+        setLoading(false)
+        return
+      }
 
-    if (password.length < 6) {
-      setError('Пароль должен содержать минимум 6 символов')
-      setLoading(false)
-      return
-    }
+      if (password.length < 6) {
+        setError('Пароль должен содержать минимум 6 символов')
+        setLoading(false)
+        return
+      }
 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-    if (!emailRegex.test(email)) {
-      setError('Введите корректный email')
-      setLoading(false)
-      return
-    }
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+      if (!emailRegex.test(email)) {
+        setError('Введите корректный email')
+        setLoading(false)
+        return
+      }
 
-    const result = await register(name, email, login, password)
-    setLoading(false)
-    
-    if (result.success) {
-      navigate('/club')
-    } else {
-      setError(result.error || 'Ошибка при регистрации')
+      const result = await register(name, email, login, password)
+      
+      if (result.success) {
+        navigate('/club')
+      } else {
+        setError(result.error || 'Ошибка при регистрации')
+      }
+    } catch (error: any) {
+      console.error('Register form error:', error)
+      setError(error.message || 'Произошла ошибка при регистрации')
+    } finally {
+      setLoading(false)
     }
   }
 
