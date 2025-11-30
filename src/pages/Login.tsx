@@ -1,8 +1,7 @@
-// Login/Register page with WOW premium crypto-style design (Dark theme only)
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuthStore } from '@/store/authStore'
-import { Sparkles, Wallet, TrendingUp, Lock, Mail, User, Coins } from 'lucide-react'
+import { Sparkles, Wallet, Lock, User, Coins } from 'lucide-react'
 
 type TabType = 'login' | 'register'
 
@@ -247,122 +246,7 @@ export const Login = () => {
             null
             /* 
             <form onSubmit={handleRegister} className="space-y-4 sm:space-y-5">
-              <div>
-                <label htmlFor="name" className="block text-xs sm:text-sm font-semibold mb-2 sm:mb-2.5 text-gray-300">
-                  Имя
-                </label>
-                <div className="relative group">
-                  <User className="absolute left-3 sm:left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 sm:w-5 sm:h-5 transition-colors text-gray-500 group-focus-within:text-emerald-400" />
-                  <input
-                    id="name"
-                    type="text"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    className="w-full pl-10 sm:pl-11 pr-3 sm:pr-4 py-3 sm:py-3.5 rounded-lg sm:rounded-xl border-2 text-sm sm:text-base transition-all duration-200 border-gray-700 bg-gray-800/60 text-white placeholder-gray-500 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 focus:bg-gray-800"
-                    placeholder="Введите ваше имя"
-                    autoComplete="name"
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label htmlFor="email" className="block text-xs sm:text-sm font-semibold mb-2 sm:mb-2.5 text-gray-300">
-                  Email
-                </label>
-                <div className="relative group">
-                  <Mail className="absolute left-3 sm:left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 sm:w-5 sm:h-5 transition-colors text-gray-500 group-focus-within:text-emerald-400" />
-                  <input
-                    id="email"
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className="w-full pl-10 sm:pl-11 pr-3 sm:pr-4 py-3 sm:py-3.5 rounded-lg sm:rounded-xl border-2 text-sm sm:text-base transition-all duration-200 border-gray-700 bg-gray-800/60 text-white placeholder-gray-500 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 focus:bg-gray-800"
-                    placeholder="your@email.com"
-                    autoComplete="email"
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label htmlFor="reg-login" className="block text-xs sm:text-sm font-semibold mb-2 sm:mb-2.5 text-gray-300">
-                  Логин
-                </label>
-                <div className="relative group">
-                  <User className="absolute left-3 sm:left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 sm:w-5 sm:h-5 transition-colors text-gray-500 group-focus-within:text-emerald-400" />
-                  <input
-                    id="reg-login"
-                    type="text"
-                    value={login}
-                    onChange={(e) => setLogin(e.target.value)}
-                    className="w-full pl-10 sm:pl-11 pr-3 sm:pr-4 py-3 sm:py-3.5 rounded-lg sm:rounded-xl border-2 text-sm sm:text-base transition-all duration-200 border-gray-700 bg-gray-800/60 text-white placeholder-gray-500 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 focus:bg-gray-800"
-                    placeholder="Введите логин"
-                    autoComplete="username"
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label htmlFor="reg-password" className="block text-xs sm:text-sm font-semibold mb-2 sm:mb-2.5 text-gray-300">
-                  Пароль
-                </label>
-                <div className="relative group">
-                  <Lock className="absolute left-3 sm:left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 sm:w-5 sm:h-5 transition-colors text-gray-500 group-focus-within:text-emerald-400" />
-                  <input
-                    id="reg-password"
-                    type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    className="w-full pl-10 sm:pl-11 pr-3 sm:pr-4 py-3 sm:py-3.5 rounded-lg sm:rounded-xl border-2 text-sm sm:text-base transition-all duration-200 border-gray-700 bg-gray-800/60 text-white placeholder-gray-500 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 focus:bg-gray-800"
-                    placeholder="Минимум 6 символов"
-                    autoComplete="new-password"
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label htmlFor="confirm-password" className="block text-xs sm:text-sm font-semibold mb-2 sm:mb-2.5 text-gray-300">
-                  Подтвердите пароль
-                </label>
-                <div className="relative group">
-                  <Lock className="absolute left-3 sm:left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 sm:w-5 sm:h-5 transition-colors text-gray-500 group-focus-within:text-emerald-400" />
-                  <input
-                    id="confirm-password"
-                    type="password"
-                    value={confirmPassword}
-                    onChange={(e) => setConfirmPassword(e.target.value)}
-                    className="w-full pl-10 sm:pl-11 pr-3 sm:pr-4 py-3 sm:py-3.5 rounded-lg sm:rounded-xl border-2 text-sm sm:text-base transition-all duration-200 border-gray-700 bg-gray-800/60 text-white placeholder-gray-500 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 focus:bg-gray-800"
-                    placeholder="Повторите пароль"
-                    autoComplete="new-password"
-                  />
-                </div>
-              </div>
-
-              {error && (
-                <div className="p-3 sm:p-4 rounded-lg sm:rounded-xl border-2 text-sm sm:text-base bg-red-900/20 text-red-300 border-red-700/50 animate-shake">
-                  <div className="flex items-center gap-2">
-                    <div className="w-1.5 h-1.5 rounded-full bg-current flex-shrink-0"></div>
-                    <span>{error}</span>
-                  </div>
-                </div>
-              )}
-
-              <button
-                type="submit"
-                disabled={loading}
-                className="w-full py-3.5 sm:py-4 rounded-lg sm:rounded-xl font-bold text-sm sm:text-base transition-all duration-300 bg-gradient-to-r from-emerald-500 via-emerald-600 to-emerald-700 hover:from-emerald-600 hover:via-emerald-700 hover:to-emerald-800 text-white shadow-lg shadow-emerald-500/30 hover:shadow-emerald-500/50 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 transform hover:scale-[1.02] active:scale-[0.98]"
-              >
-                {loading ? (
-                  <>
-                    <div className="w-4 h-4 sm:w-5 sm:h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
-                    <span>Регистрация...</span>
-                  </>
-                ) : (
-                  <>
-                    <TrendingUp className="w-4 h-4 sm:w-5 sm:h-5" />
-                    <span>Зарегистрироваться</span>
-                  </>
-                )}
-              </button>
+              ...
             </form>
             */
           )}
