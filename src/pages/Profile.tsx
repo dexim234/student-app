@@ -1,7 +1,7 @@
 // Profile page - Premium design matching site style
 import { Layout } from '@/components/Layout'
 import { useAuthStore } from '@/store/authStore'
-import { User, Mail, CreditCard, Calendar } from 'lucide-react'
+import { User, Mail } from 'lucide-react'
 
 export const Profile = () => {
   const { user } = useAuthStore()

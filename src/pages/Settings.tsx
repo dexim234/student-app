@@ -13,8 +13,7 @@ import {
   RefreshCw,
   FileText,
   FileCheck,
-  ArrowLeft,
-  LogOut
+  ArrowLeft
 } from 'lucide-react'
 
 export const Settings = () => {
