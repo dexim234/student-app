@@ -2,7 +2,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { useThemeStore } from '@/store/themeStore'
 import { Layout } from '@/components/Layout'
-import { getCalls, subscribeToCalls } from '@/services/firestoreService'
+import { subscribeToCalls } from '@/services/firestoreService'
 import { Call, TEAM_MEMBERS } from '@/types'
 import { Info, Bell, X, Copy, Check, TrendingUp, TrendingDown, Clock, Target, AlertCircle, FileText, Sparkles } from 'lucide-react'
 
