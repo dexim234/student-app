@@ -1,8 +1,8 @@
 // Club page - Trading signals for students
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useThemeStore } from '@/store/themeStore'
 import { Layout } from '@/components/Layout'
-import { getCalls } from '@/services/firestoreService'
+import { getCalls, subscribeToCalls } from '@/services/firestoreService'
 import { Call, TEAM_MEMBERS } from '@/types'
 import { Info, Bell, X, Copy, Check, TrendingUp, TrendingDown, Clock, Target, AlertCircle, FileText, Sparkles } from 'lucide-react'
 
@@ -19,40 +19,49 @@ export const Club = () => {
     trader: ''
   })
   const [copiedTicker, setCopiedTicker] = useState<string | null>(null)
+  const unsubscribeRef = useRef<(() => void) | null>(null)
 
+  // Real-time subscription when filters change
   useEffect(() => {
-    loadCalls()
-  }, [filters])
+    // Unsubscribe from previous subscription
+    if (unsubscribeRef.current) {
+      unsubscribeRef.current()
+    }
 
-  const loadCalls = async () => {
     setLoading(true)
-    try {
-      const fetchedCalls = await getCalls({
+    
+    // Subscribe to real-time updates
+    const unsubscribe = subscribeToCalls(
+      (updatedCalls) => {
+        let filtered = updatedCalls
+        
+        // Apply additional filters in memory
+        if (filters.strategy) {
+          filtered = filtered.filter(c => c.strategy === filters.strategy)
+        }
+        if (filters.trader) {
+          filtered = filtered.filter(c => c.userId === filters.trader)
+        }
+        
+        setCalls(filtered)
+        setLoading(false)
+      },
+      {
         status: filters.activeOnly ? 'active' : undefined,
         activeOnly: filters.activeOnly,
-        strategy: filters.strategy || undefined,
         userId: filters.trader || undefined
-      })
-      
-      let filtered = fetchedCalls
-      
-      // Filter by active (24 hours) if needed
-      if (filters.activeOnly) {
-        const yesterday = new Date()
-        yesterday.setHours(yesterday.getHours() - 24)
-        filtered = filtered.filter(c => {
-          const createdAt = new Date(c.createdAt)
-          return c.status === 'active' && createdAt >= yesterday
-        })
       }
-      
-      setCalls(filtered)
-    } catch (error) {
-      console.error('Error loading calls:', error)
-    } finally {
-      setLoading(false)
+    )
+
+    unsubscribeRef.current = unsubscribe
+
+    // Cleanup on unmount
+    return () => {
+      if (unsubscribeRef.current) {
+        unsubscribeRef.current()
+      }
     }
-  }
+  }, [filters])
 
   const copyTicker = async (ticker: string) => {
     try {

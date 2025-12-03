@@ -1,23 +1,21 @@
+// Login/Register page with WOW premium crypto-style design (Dark theme only)
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuthStore } from '@/store/authStore'
-import { Sparkles, Wallet, Lock, User, Coins } from 'lucide-react'
+import { Sparkles, Wallet, TrendingUp, Lock, Mail, User, Coins } from 'lucide-react'
 
 type TabType = 'login' | 'register'
 
 export const Login = () => {
-  // Регистрация отключена - оставляем только вход
   const [activeTab, setActiveTab] = useState<TabType>('login')
   const [login, setLogin] = useState('')
   const [password, setPassword] = useState('')
-  // Переменные для регистрации сохранены, но не используются (регистрация отключена)
-  // const [name, setName] = useState('')
-  // const [email, setEmail] = useState('')
-  // const [confirmPassword, setConfirmPassword] = useState('')
+  const [name, setName] = useState('')
+  const [email, setEmail] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
-  const { login: loginUser } = useAuthStore()
-  // const { login: loginUser, register } = useAuthStore() // register отключен
+  const { login: loginUser, register } = useAuthStore()
   const navigate = useNavigate()
 
   const handleLogin = async (e: React.FormEvent) => {
@@ -47,8 +45,6 @@ export const Login = () => {
     }
   }
 
-  // Функция регистрации отключена, но код сохранен для возможного восстановления
-  /*
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault()
     setError('')
@@ -94,7 +90,6 @@ export const Login = () => {
       setLoading(false)
     }
   }
-  */
 
   return (
     <div className="min-h-screen flex items-center justify-center p-3 sm:p-4 md:p-6 relative overflow-hidden bg-gradient-to-br from-slate-950 via-gray-900 to-black">
@@ -138,22 +133,24 @@ export const Login = () => {
           </div>
 
           {/* Premium tabs - responsive */}
-          {/* Регистрация отключена - показываем только вход */}
           <div className="flex gap-2 sm:gap-2.5">
             <button
               onClick={() => {
                 setActiveTab('login')
                 setError('')
               }}
-              className="flex-1 py-2.5 sm:py-3 px-3 sm:px-4 rounded-lg sm:rounded-xl text-sm sm:text-base font-semibold transition-all duration-300 bg-emerald-500/20 text-emerald-400 border-2 border-emerald-500/40 shadow-lg shadow-emerald-500/20"
+              className={`flex-1 py-2.5 sm:py-3 px-3 sm:px-4 rounded-lg sm:rounded-xl text-sm sm:text-base font-semibold transition-all duration-300 ${
+                activeTab === 'login'
+                  ? 'bg-emerald-500/20 text-emerald-400 border-2 border-emerald-500/40 shadow-lg shadow-emerald-500/20'
+                  : 'text-gray-400 hover:text-white hover:bg-gray-800/50 border-2 border-transparent'
+              }`}
             >
               <div className="flex items-center justify-center gap-1.5 sm:gap-2">
                 <Lock className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                 <span>Вход</span>
               </div>
             </button>
-            {/* Кнопка регистрации скрыта, но код сохранен для возможного восстановления */}
-            {/* <button
+            <button
               onClick={() => {
                 setActiveTab('register')
                 setError('')
@@ -169,13 +166,12 @@ export const Login = () => {
                 <span className="hidden xs:inline">Регистрация</span>
                 <span className="xs:hidden">Рег.</span>
               </div>
-            </button> */}
+            </button>
           </div>
         </div>
 
         {/* Form container - responsive padding */}
         <div className="p-4 sm:p-5 md:p-6">
-          {/* Регистрация отключена - показываем только форму входа */}
           {activeTab === 'login' ? (
             <form onSubmit={handleLogin} className="space-y-4 sm:space-y-5">
               <div>
@@ -242,13 +238,124 @@ export const Login = () => {
               </button>
             </form>
           ) : (
-            /* Форма регистрации отключена, но код сохранен для возможного восстановления */
-            null
-            /* 
             <form onSubmit={handleRegister} className="space-y-4 sm:space-y-5">
-              ...
+              <div>
+                <label htmlFor="name" className="block text-xs sm:text-sm font-semibold mb-2 sm:mb-2.5 text-gray-300">
+                  Имя
+                </label>
+                <div className="relative group">
+                  <User className="absolute left-3 sm:left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 sm:w-5 sm:h-5 transition-colors text-gray-500 group-focus-within:text-emerald-400" />
+                  <input
+                    id="name"
+                    type="text"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    className="w-full pl-10 sm:pl-11 pr-3 sm:pr-4 py-3 sm:py-3.5 rounded-lg sm:rounded-xl border-2 text-sm sm:text-base transition-all duration-200 border-gray-700 bg-gray-800/60 text-white placeholder-gray-500 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 focus:bg-gray-800"
+                    placeholder="Введите ваше имя"
+                    autoComplete="name"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label htmlFor="email" className="block text-xs sm:text-sm font-semibold mb-2 sm:mb-2.5 text-gray-300">
+                  Email
+                </label>
+                <div className="relative group">
+                  <Mail className="absolute left-3 sm:left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 sm:w-5 sm:h-5 transition-colors text-gray-500 group-focus-within:text-emerald-400" />
+                  <input
+                    id="email"
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="w-full pl-10 sm:pl-11 pr-3 sm:pr-4 py-3 sm:py-3.5 rounded-lg sm:rounded-xl border-2 text-sm sm:text-base transition-all duration-200 border-gray-700 bg-gray-800/60 text-white placeholder-gray-500 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 focus:bg-gray-800"
+                    placeholder="your@email.com"
+                    autoComplete="email"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label htmlFor="reg-login" className="block text-xs sm:text-sm font-semibold mb-2 sm:mb-2.5 text-gray-300">
+                  Логин
+                </label>
+                <div className="relative group">
+                  <User className="absolute left-3 sm:left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 sm:w-5 sm:h-5 transition-colors text-gray-500 group-focus-within:text-emerald-400" />
+                  <input
+                    id="reg-login"
+                    type="text"
+                    value={login}
+                    onChange={(e) => setLogin(e.target.value)}
+                    className="w-full pl-10 sm:pl-11 pr-3 sm:pr-4 py-3 sm:py-3.5 rounded-lg sm:rounded-xl border-2 text-sm sm:text-base transition-all duration-200 border-gray-700 bg-gray-800/60 text-white placeholder-gray-500 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 focus:bg-gray-800"
+                    placeholder="Введите логин"
+                    autoComplete="username"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label htmlFor="reg-password" className="block text-xs sm:text-sm font-semibold mb-2 sm:mb-2.5 text-gray-300">
+                  Пароль
+                </label>
+                <div className="relative group">
+                  <Lock className="absolute left-3 sm:left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 sm:w-5 sm:h-5 transition-colors text-gray-500 group-focus-within:text-emerald-400" />
+                  <input
+                    id="reg-password"
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    className="w-full pl-10 sm:pl-11 pr-3 sm:pr-4 py-3 sm:py-3.5 rounded-lg sm:rounded-xl border-2 text-sm sm:text-base transition-all duration-200 border-gray-700 bg-gray-800/60 text-white placeholder-gray-500 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 focus:bg-gray-800"
+                    placeholder="Минимум 6 символов"
+                    autoComplete="new-password"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label htmlFor="confirm-password" className="block text-xs sm:text-sm font-semibold mb-2 sm:mb-2.5 text-gray-300">
+                  Подтвердите пароль
+                </label>
+                <div className="relative group">
+                  <Lock className="absolute left-3 sm:left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 sm:w-5 sm:h-5 transition-colors text-gray-500 group-focus-within:text-emerald-400" />
+                  <input
+                    id="confirm-password"
+                    type="password"
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    className="w-full pl-10 sm:pl-11 pr-3 sm:pr-4 py-3 sm:py-3.5 rounded-lg sm:rounded-xl border-2 text-sm sm:text-base transition-all duration-200 border-gray-700 bg-gray-800/60 text-white placeholder-gray-500 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 focus:bg-gray-800"
+                    placeholder="Повторите пароль"
+                    autoComplete="new-password"
+                  />
+                </div>
+              </div>
+
+              {error && (
+                <div className="p-3 sm:p-4 rounded-lg sm:rounded-xl border-2 text-sm sm:text-base bg-red-900/20 text-red-300 border-red-700/50 animate-shake">
+                  <div className="flex items-center gap-2">
+                    <div className="w-1.5 h-1.5 rounded-full bg-current flex-shrink-0"></div>
+                    <span>{error}</span>
+                  </div>
+                </div>
+              )}
+
+              <button
+                type="submit"
+                disabled={loading}
+                className="w-full py-3.5 sm:py-4 rounded-lg sm:rounded-xl font-bold text-sm sm:text-base transition-all duration-300 bg-gradient-to-r from-emerald-500 via-emerald-600 to-emerald-700 hover:from-emerald-600 hover:via-emerald-700 hover:to-emerald-800 text-white shadow-lg shadow-emerald-500/30 hover:shadow-emerald-500/50 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 transform hover:scale-[1.02] active:scale-[0.98]"
+              >
+                {loading ? (
+                  <>
+                    <div className="w-4 h-4 sm:w-5 sm:h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+                    <span>Регистрация...</span>
+                  </>
+                ) : (
+                  <>
+                    <TrendingUp className="w-4 h-4 sm:w-5 sm:h-5" />
+                    <span>Зарегистрироваться</span>
+                  </>
+                )}
+              </button>
             </form>
-            */
           )}
         </div>
 

@@ -1,17 +1,18 @@
-
-// Main App component with routing for students - No authentication required
+// Main App component with routing for students
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
-
+import { useAuthStore } from './store/authStore'
 import { useEffect } from 'react'
+import { Login } from './pages/Login'
 import { Profile } from './pages/Profile'
 import { Wallet } from './pages/Wallet'
 import { Club } from './pages/Club'
 import { Trading } from './pages/Trading'
 import { Referrals } from './pages/Referrals'
 import { Settings } from './pages/Settings'
+import { ProtectedRoute } from './components/ProtectedRoute'
 
 function App() {
-  // const { isAuthenticated } = useAuthStore() // No longer needed
+  const { isAuthenticated } = useAuthStore()
 
   useEffect(() => {
     // Apply dark theme on mount
@@ -21,37 +22,60 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        {/* Remove login route - no authentication needed */}
+        <Route path="/login" element={!isAuthenticated ? <Login /> : <Navigate to="/club" replace />} />
         <Route
           path="/profile"
-          element={<Profile />}
+          element={
+            <ProtectedRoute>
+              <Profile />
+            </ProtectedRoute>
+          }
         />
         <Route
           path="/wallet"
-          element={<Wallet />}
+          element={
+            <ProtectedRoute>
+              <Wallet />
+            </ProtectedRoute>
+          }
         />
         <Route
           path="/club"
-          element={<Club />}
+          element={
+            <ProtectedRoute>
+              <Club />
+            </ProtectedRoute>
+          }
         />
         <Route
           path="/trading"
-          element={<Trading />}
+          element={
+            <ProtectedRoute>
+              <Trading />
+            </ProtectedRoute>
+          }
         />
         <Route
           path="/referrals"
-          element={<Referrals />}
+          element={
+            <ProtectedRoute>
+              <Referrals />
+            </ProtectedRoute>
+          }
         />
         <Route
           path="/settings"
-          element={<Settings />}
+          element={
+            <ProtectedRoute>
+              <Settings />
+            </ProtectedRoute>
+          }
         />
-        {/* Redirect to club by default */}
-        <Route path="/" element={<Navigate to="/club" replace />} />
-        <Route path="*" element={<Navigate to="/club" replace />} />
+        <Route path="/" element={<Navigate to={isAuthenticated ? "/club" : "/login"} replace />} />
       </Routes>
     </BrowserRouter>
   )
 }
 
 export default App
+
